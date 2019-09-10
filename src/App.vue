@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <h1> testestest </h1>
+    <router-link to="/"> login </router-link>
+    <router-link to="/browse"> browse </router-link>
+    <router-view />
   </div>
 </template>
 
@@ -9,9 +11,8 @@
 
 export default {
   name: 'app',
-  components: {
-  }
 }
+
 </script>
 
 <style>
