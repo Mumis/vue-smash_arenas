@@ -61,11 +61,7 @@ export default {
         border: none;
         color: white;
         border-radius: 3px;
-    }
-
-    .form button:hover {
         cursor: pointer;
-
     }
 
     .input-section {
@@ -85,7 +81,6 @@ export default {
         border: none; 
         outline: none;
         font-size: 15px;
-
     }
 
     .input-section label {
