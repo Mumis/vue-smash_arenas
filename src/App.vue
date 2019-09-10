@@ -1,8 +1,5 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <router-link to="/"> login </router-link>
-    <router-link to="/browse"> browse </router-link>
     <router-view />
   </div>
 </template>
@@ -25,7 +22,17 @@ export default {
   #app {
     font-family: 'Montserrat', sans-serif;
     color: #2c3e50;
+    background-color: rgb(219,236,236);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  a {
+    color: rgb(79,192,141);
+  }
+
+  small {
+    font-size: 14px;
+  }
+
 </style>
