@@ -3,28 +3,48 @@
         <img src="../assets/Logo.svg" class="logo"/>
         <form class="form">
             <div class="email-section input-section">
-                <input type="text" id="email" autocomplete="off" required> 
+                <input v-model="email" type="text" id="email" autocomplete="off" required/> 
                 <label class="label-email input-label">
                     <span class="content-email input-content"> Email </span>
                 </label>
             </div>
             <div class="password-section input-section">
-                <input  type="password" id="password" required/>
+                <input v-model="password" type="password" id="password" required/>
                 <label class="label-password input-label">
                     <span class="content-password input-content"> Password </span>
                 </label>    
             </div>
             <small> Don't have an account? <router-link to="/signup"> Sign up.</router-link> </small>
-            <button> Sign in</button>    
+            <button @click="login"> Sign in</button>    
         </form>
     </div>
 </template>
 
 <script>
 
-export default {
-    
-}
+    import firebase from 'firebase';
+
+    export default {
+        name: 'login',
+        data() {
+            return {
+                email: '',
+                password: '',
+            }
+        },
+        methods: {
+            login: function() {
+                firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
+                    (user) => {
+                        this.$router.replace('home')
+                    },
+                    (err) => {
+                        alert('Oh noes! ' + err.message)
+                    }
+                )
+            }
+        }
+    }
 
 </script>
 
