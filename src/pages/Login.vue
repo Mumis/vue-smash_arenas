@@ -15,7 +15,7 @@
                 </label>    
             </div>
             <small> Don't have an account? <router-link to="/signup"> Sign up.</router-link> </small>
-            <button @click="login"> Sign in</button>    
+            <button @click="login" type="button"> Sign in</button>    
         </form>
     </div>
 </template>
@@ -35,7 +35,7 @@
         methods: {
             login: function() {
                 firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
-                    (user) => {
+                    () => {
                         this.$router.replace('home')
                     },
                     (err) => {

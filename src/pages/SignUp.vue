@@ -48,6 +48,10 @@
             signUp: function() {
                 firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
                     (user) => {
+                        firebase.database().ref('Users/' + user.user.uid).set({
+                            Username: this.username,
+                            Game: ''
+                        });
                         this.$router.replace('home')
                     },
                     (err) => {
