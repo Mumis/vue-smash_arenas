@@ -6,6 +6,7 @@ import Home from '../pages/Home'
 import Login from '../pages/Login'
 import SignUp from '../pages/SignUp'
 import CreateLobby from '../pages/CreateLobby'
+import Lobby from '../pages/Lobby'
 
 Vue.use(Router);
 
@@ -41,6 +42,14 @@ const router = new Router({
             path: '/createlobby',
             name: 'createlobby',
             component: CreateLobby,
+            meta: {
+                requiresAuth: true,
+            },
+        },
+        {
+            path: '/lobby',
+            name: 'lobby',
+            component: Lobby,
             meta: {
                 requiresAuth: true,
             },

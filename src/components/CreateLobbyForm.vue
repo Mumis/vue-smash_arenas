@@ -19,6 +19,7 @@
             </label>    
         </div>
         <div class="select-section">
+            <label> Region: </label>
             <select v-model="region">
                 <option value="Europe">Europe</option>
                 <option value="America">America</option>
@@ -27,9 +28,19 @@
                 <option value="Oceania">Oceania</option>
             </select>
 
+            <label> Connection type: </label>
             <select v-model="connection">
                 <option value="Cable">Ethernet cable</option>
                 <option value="Wifi">Wifi</option>
+            </select>
+
+            <label> Max players: </label>
+            <select v-model="players">
+                <option value="2">2 players</option>
+                <option value="3">3 players</option>
+                <option value="3">4 players</option>
+                <option value="3">5 players</option>
+                <option value="3">6 players</option>             
             </select>
         </div>
         <button @click="createLobby" type="button">Create</button>
@@ -45,6 +56,7 @@
         data() {
             return {
                 region: 'Europe',
+                players: "2",
                 connection: 'Cable',
                 arenaId: '',
                 arenaPassword: '',
@@ -53,7 +65,27 @@
         },
         methods: {
             createLobby: function() {
-
+                var userId = firebase.auth().currentUser.uid;
+                var key = firebase.database().ref("Lobbies/" + this.region).push().key;
+                firebase.database().ref("Lobbies/" + this.region + "/" + key).set({
+                    LobbyName: this.lobbyName,
+                    ArenaId: this.arenaId,
+                    ArenaPassword: this.arenaPassword,
+                    Connection: this.connection,
+                    Max_Players: this.players,
+                    Players: {
+                        [userId]: true
+                    },
+                    Messages: {
+                        Notice: {
+                            Username: "Notice",
+                            Message: "Say hello!",
+                            Timestamp: Date.now()
+                        },
+                    },
+                }).then(() => {
+                    this.$router.replace('lobby');
+                });
             }, 
         },   
     };
@@ -144,6 +176,7 @@
 
     .select-section {
         display: flex;
+        flex-direction: column;
         width: 100%;
         justify-content: space-between;
         padding: 20px 0;
@@ -160,5 +193,6 @@
         border-radius: 3px;
         cursor: pointer;
         outline: none;
+        margin-bottom: 10px;
     }
 </style>
