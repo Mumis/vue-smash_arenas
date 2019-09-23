@@ -29,9 +29,9 @@
             <select v-model="players">
                 <option value="2">2 players</option>
                 <option value="3">3 players</option>
-                <option value="3">4 players</option>
-                <option value="3">5 players</option>
-                <option value="3">6 players</option>             
+                <option value="4">4 players</option>
+                <option value="5">5 players</option>
+                <option value="6">6 players</option>             
             </select>
 
             <label> Region: </label>
