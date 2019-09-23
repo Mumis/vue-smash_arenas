@@ -5,8 +5,9 @@ import firebase from 'firebase'
 import Home from '../pages/Home'
 import Login from '../pages/Login'
 import SignUp from '../pages/SignUp'
+import CreateLobby from '../pages/CreateLobby'
 
-Vue.use(Router)
+Vue.use(Router);
 
 const router = new Router({
     routes: [
@@ -32,6 +33,14 @@ const router = new Router({
             path: '/home',
             name: 'home',
             component: Home,
+            meta: {
+                requiresAuth: true,
+            },
+        },
+        {
+            path: '/createlobby',
+            name: 'createlobby',
+            component: CreateLobby,
             meta: {
                 requiresAuth: true,
             },

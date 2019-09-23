@@ -18,12 +18,6 @@
                 <span class="content-password input-content"> Password </span>
             </label>    
         </div>
-        <div class="password-confirm-section input-section">
-            <input type="password" id="password-confirm" required/>
-            <label class="label-password-confirm input-label">
-                <span class="content-password-confirm input-content"> Confirm password</span>
-            </label>
-        </div>
         <button @click="signUp" type="button">Create account</button>
     </form>
 </template>

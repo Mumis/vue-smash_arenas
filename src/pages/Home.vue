@@ -10,7 +10,9 @@
                 <option value="Africa">Africa</option>
                 <option value="Oceania">Oceania</option>
             </select>
-            <button>Create lobby</button>
+            <router-link to="/createlobby">
+                <button>New lobby</button>
+            </router-link>
         </div>
     </div>
 </template>

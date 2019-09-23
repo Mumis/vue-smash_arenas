@@ -39,9 +39,9 @@
                         alert('Oh noes! ' + err.message)
                     }
                 )
-            }
-        }
-    }
+            },
+        },
+    };
 
 </script>
 
