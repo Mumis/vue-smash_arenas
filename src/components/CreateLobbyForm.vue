@@ -1,7 +1,7 @@
 <template>
     <form class="form">
         <div class="lobbyName-section input-section">
-            <input v-model="lobbyName" type="text" id="lobbyName" required/>
+            <input v-model="lobbyName" type="text" id="lobbyName" required maxlength="80" minlength="5"/>
             <label class="label-lobbyName input-label">
                 <span class="content-lobbyName input-content"> Lobby name </span>
             </label>    
@@ -9,7 +9,7 @@
         <div class="arenaId-section input-section">
             <input v-model="arenaId" type="text" id="arenaId" autocomplete="off" required/> 
             <label class="label-arenaId input-label">
-                <span class="content-arenaId input-content"> Arena-ID </span>
+                <span class="content-arenaId input-content"> Arena ID </span>
             </label>
         </div>
         <div class="arenaPassword-section input-section">
@@ -19,6 +19,21 @@
             </label>    
         </div>
         <div class="select-section">
+            <label> Skill level: </label>
+            <select v-model="skill">
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Pro">Pro</option>
+            </select>
+            <label> Max players: </label>
+            <select v-model="players">
+                <option value="2">2 players</option>
+                <option value="3">3 players</option>
+                <option value="3">4 players</option>
+                <option value="3">5 players</option>
+                <option value="3">6 players</option>             
+            </select>
+
             <label> Region: </label>
             <select v-model="region">
                 <option value="Europe">Europe</option>
@@ -34,14 +49,6 @@
                 <option value="Wifi">Wifi</option>
             </select>
 
-            <label> Max players: </label>
-            <select v-model="players">
-                <option value="2">2 players</option>
-                <option value="3">3 players</option>
-                <option value="3">4 players</option>
-                <option value="3">5 players</option>
-                <option value="3">6 players</option>             
-            </select>
         </div>
         <button @click="createLobby" type="button">Create</button>
     </form>
@@ -55,6 +62,7 @@
         name: "CreateLobbyForm",
         data() {
             return {
+                skill: 'Intermediate',
                 region: 'Europe',
                 players: "2",
                 connection: 'Cable',
@@ -67,12 +75,18 @@
             createLobby: function() {
                 var userId = firebase.auth().currentUser.uid;
                 var key = firebase.database().ref("Lobbies/" + this.region).push().key;
+                firebase.database().ref("Users/" + userId).update({
+                    Game: key,
+                });
                 firebase.database().ref("Lobbies/" + this.region + "/" + key).set({
+                    Key: key,
+                    Skill: this.skill,
                     LobbyName: this.lobbyName,
                     ArenaId: this.arenaId,
                     ArenaPassword: this.arenaPassword,
                     Connection: this.connection,
-                    Max_Players: this.players,
+                    MaxPlayers: this.players,
+                    Created: Date.now(),
                     Players: {
                         [userId]: true
                     },

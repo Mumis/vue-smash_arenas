@@ -3,7 +3,7 @@
         <img src="../assets/Logo.svg" class="logo"/>
 
         <div class="header">
-            <select v-model="region">
+            <select v-model="region" @change="onChange">
                 <option value="Europe">Europe</option>
                 <option value="America">America</option>
                 <option value="Asia">Asia</option>
@@ -14,10 +14,13 @@
                 <button>New lobby</button>
             </router-link>
         </div>
+        <LobbyList :lobbies="lobbies" :region="region"/>
     </div>
 </template>
 
 <script>
+    import firebase from 'firebase';
+    import LobbyList from '../components/LobbyList'
 
     export default {
         name: "Home",
@@ -25,16 +28,25 @@
             return {
                 region: 'Europe',
                 games: [],
+                lobbies: {},
             }
         },
+        components: {
+            LobbyList
+        },
+        created() {
+            firebase.database().ref("Lobbies/" + this.region).once('value', (snapshot) => {
+                this.lobbies = snapshot.val();
+            });
+        },
         methods: {
-            fetchGames: function() {
-                
-
-            }
-        }    
-    }
-
+            onChange: function() {
+                firebase.database().ref("Lobbies/" + this.region).once('value', (snapshot) => {
+                    this.lobbies = snapshot.val();
+                });
+            },
+        },  
+    };
 </script>
 
 <style scoped>
@@ -61,6 +73,7 @@
         justify-content: space-between;
         max-width: 800px;
         width: 100%;
+        margin-bottom: 15px;
     }
 
     button, select {
