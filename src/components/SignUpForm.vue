@@ -40,8 +40,7 @@
                 firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
                     (user) => {
                         firebase.database().ref('Users/' + user.user.uid).set({
-                            Username: this.username,
-                            Game: ''
+                            Username: this.username
                         });
                         this.$router.replace('home')
                     },

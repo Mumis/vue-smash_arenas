@@ -1,7 +1,7 @@
 <template>
     <form class="form">
         <div class="lobbyName-section input-section">
-            <input v-model="lobbyName" type="text" id="lobbyName" required maxlength="80" minlength="5"/>
+            <input v-model="lobbyName" type="text" id="lobbyName" required />
             <label class="label-lobbyName input-label">
                 <span class="content-lobbyName input-content"> Lobby name </span>
             </label>    
@@ -76,7 +76,9 @@
                 var userId = firebase.auth().currentUser.uid;
                 var key = firebase.database().ref("Lobbies/" + this.region).push().key;
                 firebase.database().ref("Users/" + userId).update({
-                    Game: key,
+                    Lobby: {
+                        [this.region]: key
+                    },
                 });
                 firebase.database().ref("Lobbies/" + this.region + "/" + key).set({
                     Key: key,
