@@ -3,8 +3,8 @@
         <p class="lobby-name">{{lobby.LobbyName}}</p>
         <p><small>Connection type: {{lobby.Connection}}</small></p>
         <p><small>Skill level: {{lobby.Skill}}</small></p>
-        <div class="players">
-            {{players}} / {{lobby.MaxPlayers}} <i class="fas fa-user"></i>
+        <div class="players" :class= "{full: full}">
+            {{players}} / {{maxPlayers}} <i class="fas fa-user"></i>
         </div>
     </div>
 </template>
@@ -17,7 +17,9 @@
         name: "LobbyItem",
         data() {
             return {
-                players: ""
+                players: "",
+                maxPlayers: "",
+                full: false
             }
         },
         props: {
@@ -29,6 +31,10 @@
             getPlayers: function () {
                 if (this.lobby.Players) {
                     this.players = Object.keys(this.lobby.Players).length;
+                    this.maxPlayers = parseInt(this.lobby.MaxPlayers);
+                }
+                if (this.players >= this.maxPlayers) {
+                    this.full = true;
                 }
             },
         },
@@ -59,6 +65,10 @@
         position: absolute;
         top: 50%;
         right: 0;
+    }
+
+    .full {
+        color: #ff3333;
     }
 
 </style>
