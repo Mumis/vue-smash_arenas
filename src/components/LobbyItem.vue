@@ -27,7 +27,9 @@
         },
         methods: {
             getPlayers: function () {
-                this.players = Object.keys(this.lobby.Players).length;
+                if (this.lobby.Players) {
+                    this.players = Object.keys(this.lobby.Players).length;
+                }
             },
         },
         mounted() {

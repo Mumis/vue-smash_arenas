@@ -28,7 +28,7 @@
             return {
                 region: 'Europe',
                 games: [],
-                lobbies: {},
+                lobbies: false
             }
         },
         components: {

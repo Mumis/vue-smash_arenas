@@ -1,6 +1,10 @@
 <template>
     <ul>
-        <li v-for="lobby in lobbies" v-bind:key="lobby.key" @click="Onclick(lobby.Key)">
+        <div v-if="!lobbies" class="none-available">
+            <p> No lobbies available right now :( </p>
+            <p> Try creating one! </p>
+        </div>
+        <li v-for="lobby in lobbies" v-bind:key="lobby.Key" @click="Onclick(lobby.Key)">
             <LobbyItem v-if="lobby" :lobby="lobby"/>
         </li>
     </ul>
@@ -15,7 +19,6 @@
         name: "LobbyList",
         props: {
             lobbies: {
-                type: Object,
                 required: true,
             },
             region: {
@@ -26,28 +29,7 @@
         components: {
             LobbyItem,
         },
-        methods: {
-            resetUserGame: function(callback, key) {
-                var userId = firebase.auth().currentUser.uid;
-                firebase.database().ref("Users/" + userId + "/Lobby").once("value", snapshot => {
-                    if (snapshot.exists()) {
-                        var data = snapshot.val();
-                        var lobbyId = Object.values(data)[0];
-                        var lobbyRegion = Object.keys(data)[0];
-                        firebase.database().ref("Lobbies/" + lobbyRegion + "/" + lobbyId + "/Players/" + userId).remove().then(() => {
-                            firebase.database().ref("Users/" + userId + "/Lobby").remove().then(() => {
-                                if (callback) {
-                                    callback(key);
-                                }   
-                            });
-                        });
-                    } else {
-                        if (callback) {
-                            callback(key);
-                        }
-                    }
-                });
-            },
+        methods: {  
             joinGame: function(key){
                 var userId = firebase.auth().currentUser.uid;
                 firebase.database().ref("Users/" + userId).update({
@@ -63,12 +45,9 @@
                 });
             },
             Onclick: function(key) {
-                this.resetUserGame(this.joinGame, key);
+                this.joinGame(key)
             },
         },
-        mounted: function() {
-            this.resetUserGame()
-        }
     };
 
 </script>
@@ -91,6 +70,12 @@
     li:hover {
         background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(150,159,168,0) 10%,rgba(44,62,80,.1) 50%,rgba(150,159,168,0) 90%,rgba(255,255,255,0) 100%);
         cursor: pointer;
+    }
+
+    .none-available {
+        width: 100%;
+        text-align: center;
+        padding-top: 60px;
     }
 
 </style>
