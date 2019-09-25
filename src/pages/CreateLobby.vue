@@ -1,17 +1,19 @@
 <template>
     <div class="wrapper">
-        <img src="../assets/Logo.svg" class="logo"/>
+        <Header/>
         <CreateLobbyForm/>
     </div>
 </template>
 
 <script>
 
-    import CreateLobbyForm from '../components/CreateLobbyForm';
+    import Header from '../components/Header'
+    import CreateLobbyForm from '../components/CreateLobbyForm'
 
     export default {
         name: 'CreateLobby',
         components: {
+            Header,
             CreateLobbyForm
         }
     }

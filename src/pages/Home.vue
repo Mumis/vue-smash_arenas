@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <img src="../assets/Logo.svg" class="logo"/>
+        <Header/>
 
         <div class="header">
             <select v-model="region" @change="onChange">
@@ -19,7 +19,8 @@
 </template>
 
 <script>
-    import firebase from 'firebase';
+    import firebase from 'firebase'
+    import Header from '../components/Header'
     import LobbyList from '../components/LobbyList'
 
     export default {
@@ -32,6 +33,7 @@
             }
         },
         components: {
+            Header,
             LobbyList
         },
         created() {

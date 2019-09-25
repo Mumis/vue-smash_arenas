@@ -4,8 +4,8 @@
             <p> No lobbies available right now :( </p>
             <p> Try creating one! </p>
         </div>
-        <li v-for="lobby in lobbies" v-bind:key="lobby.Key" @click="Onclick(lobby)">
-            <LobbyItem v-if="lobby" :lobby="lobby"/>
+        <li v-for="lobby in lobbies" v-bind:key="lobby.Key">
+            <LobbyItem v-if="lobby" :lobby="lobby" :region="region"/>
         </li>
     </ul>
 </template>
@@ -28,27 +28,6 @@
         },
         components: {
             LobbyItem,
-        },
-        methods: {  
-            joinGame: function(lobby){
-                if (Object.keys(lobby.Players).length < lobby.MaxPlayers) {
-                    var userId = firebase.auth().currentUser.uid;
-                    firebase.database().ref("Users/" + userId).update({
-                        Lobby: {
-                            [this.region]: lobby.Key
-                        }
-                    }).then(() => {
-                        firebase.database().ref("Lobbies/" + this.region + "/" + lobby.Key + "/Players").update({
-                            [userId]: true,
-                        }).then(() => {
-                            this.$router.replace('lobby')
-                        });
-                    });
-                }
-            },
-            Onclick: function(lobby) {
-                this.joinGame(lobby)
-            },
         },
     };
 

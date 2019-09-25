@@ -1,20 +1,21 @@
 <template>
-    <div class="wrapper">
-        <img src="../assets/Logo.svg" class="logo"/>
-    </div>
+    <Header/>
 </template>
 
 <script>
 
+    import Header from '../components/Header'
+
     export default {
         name: "Lobby",
+        components: {
+            Header,
+        },
         data() {
             return {
-
             }
         },
         methods: {
-
         }    
     }
 

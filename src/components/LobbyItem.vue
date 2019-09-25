@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper">
+    <div class="wrapper" @click="onClick(lobby)">
         <p class="lobby-name">{{lobby.LobbyName}}</p>
         <p><small>Connection type: {{lobby.Connection}}</small></p>
         <p><small>Skill level: {{lobby.Skill}}</small></p>
@@ -26,6 +26,9 @@
             lobby: {
                 required: true,
             },
+            region: {
+                required: true,
+            },
         },
         methods: {
             getPlayers: function () {
@@ -36,6 +39,30 @@
                 if (this.players >= this.maxPlayers) {
                     this.full = true;
                 }
+            },
+            joinGame: function(lobby){       
+                firebase.database().ref("Lobbies/" + this.region + "/" + lobby.Key + "/Players").once("value", snapshot => {
+                    var data = snapshot.val();
+                    this.players = Object.keys(data).length;
+                }).then(() => {
+                    if (Object.keys(this.players).length < this.maxPlayers) {
+                        var userId = firebase.auth().currentUser.uid;
+                        firebase.database().ref("Users/" + userId).update({
+                            Lobby: {
+                                [this.region]: lobby.Key
+                            }
+                        }).then(() => {
+                            firebase.database().ref("Lobbies/" + this.region + "/" + lobby.Key + "/Players").update({
+                                [userId]: true,
+                            }).then(() => {
+                                this.$router.replace('lobby')
+                            });
+                        });
+                    }
+                });
+            },
+            onClick: function(lobby) {
+                this.joinGame(lobby)
             },
         },
         mounted() {
