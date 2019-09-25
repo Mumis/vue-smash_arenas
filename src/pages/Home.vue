@@ -41,6 +41,35 @@
                 this.lobbies = snapshot.val();
             });
         },
+        mounted() {
+            var userId = firebase.auth().currentUser.uid;
+            var inAGame;
+            var lobbyId;
+            var lobbyRegion;
+            var playersLeft;
+
+            firebase.database().ref("Users/" + userId + "/Lobby").once("value", snapshot => {
+                inAGame = snapshot.exists();
+                if (inAGame) {
+                    var data = snapshot.val();
+                    lobbyId = Object.values(data)[0];
+                    lobbyRegion = Object.keys(data)[0];
+                }
+            }).then(() => {
+                if (inAGame) {
+                    firebase.database().ref("Lobbies/" + lobbyRegion + "/" + lobbyId + "/Players").once("value", snapshot => {
+                        var data = snapshot.val();
+                        playersLeft = Object.keys(data);
+                    }).then(() => {
+                        if (playersLeft.length < 2) {
+                            firebase.database().ref("Lobbies/" + lobbyRegion + "/" + lobbyId).remove();
+                        }
+                        firebase.database().ref("Lobbies/" + lobbyRegion + "/" + lobbyId + "/Players/" + userId).remove();
+                        firebase.database().ref("Users/" + userId + "/Lobby").remove();
+                    });
+                }
+            });
+        },
         methods: {
             onChange: function() {
                 firebase.database().ref("Lobbies/" + this.region).once('value', (snapshot) => {

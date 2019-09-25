@@ -9,13 +9,16 @@
         name: 'Header',
         data() {
             return {
-            }
+                }
         },
         methods: {
-            onClick: function() {
+            redirectToHome: function() {
                 if (this.$route.path !== "/home") {
                     this.$router.replace('home');
                 }
+            },
+            onClick: function() {
+                this.redirectToHome();
             },
         },
     };
@@ -32,6 +35,4 @@
         border-image-slice: 1;
         cursor: pointer;
     }
-
-
 </style>
