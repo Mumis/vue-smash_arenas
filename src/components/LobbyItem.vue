@@ -42,22 +42,23 @@
             },
             joinGame: function(lobby){       
                 firebase.database().ref("Lobbies/" + this.region + "/" + lobby.Key + "/Players").once("value", snapshot => {
-                    var data = snapshot.val();
-                    this.players = Object.keys(data).length;
-                }).then(() => {
-                    if (Object.keys(this.players).length < this.maxPlayers) {
-                        var userId = firebase.auth().currentUser.uid;
-                        firebase.database().ref("Users/" + userId).update({
-                            Lobby: {
-                                [this.region]: lobby.Key
-                            }
-                        }).then(() => {
-                            firebase.database().ref("Lobbies/" + this.region + "/" + lobby.Key + "/Players").update({
-                                [userId]: true,
+                    if(snapshot.exists()){
+                        var data = snapshot.val(); 
+                        this.players = Object.keys(data).length;
+                        if (Object.keys(this.players).length < this.maxPlayers) {
+                            var userId = firebase.auth().currentUser.uid;
+                            firebase.database().ref("Users/" + userId).update({
+                                Lobby: {
+                                    [this.region]: lobby.Key
+                                }
                             }).then(() => {
-                                this.$router.replace('lobby')
+                                firebase.database().ref("Lobbies/" + this.region + "/" + lobby.Key + "/Players").update({
+                                    [userId]: true,
+                                }).then(() => {
+                                    this.$router.replace('lobby')
+                                });
                             });
-                        });
+                        }
                     }
                 });
             },

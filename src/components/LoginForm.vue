@@ -1,13 +1,13 @@
 <template>
     <form class="form">
         <div class="email-section input-section">
-            <input v-model="email" type="text" id="email" autocomplete="off" required/> 
+            <input v-model="email" type="email" id="email" autocomplete="off" required  @change="onChange"/> 
             <label class="label-email input-label">
                 <span class="content-email input-content"> Email </span>
             </label>
         </div>
         <div class="password-section input-section">
-            <input v-model="password" type="password" id="password" required/>
+            <input v-model="password" type="password" id="password" required  @change="onChange"/>
             <label class="label-password input-label">
                 <span class="content-password input-content"> Password </span>
             </label>    
@@ -40,6 +40,22 @@
                     }
                 )
             },
+            onChange: function(event) {
+                var input = event.target;
+                var inputParent = input.parentNode;
+                var valid = input.checkValidity();
+                var inputValue = input.value;
+                if (!valid) {
+                    inputParent.classList.add("invalid");
+                } else {
+                    inputParent.classList.remove("invalid");
+                }
+                if (inputValue) {
+                    inputParent.classList.add("empty");
+                } else {
+                    inputParent.classList.remove("empty");
+                }
+            }
         },
     };
 
@@ -122,8 +138,24 @@
         color: rgb(79,192,141);
     }
 
+    .invalid input + .input-label .input-content {
+        color: #ff3333;
+    }
+
+    .empty input + .input-label .input-content {
+        transform: translateY(-150%);
+        font-size: 14px;
+    }
+
     .input-section input:focus + .input-label:after,
-    .input-section input:valid + .input-label:after {
-        transform: translateX(0%)
+    .input-section input:valid + .input-label:after,
+    .invalid input:focus + .input-label:after {
+        border-color: rgb(79,192,141);
+        transform: translateX(0%);
+    }
+
+    .invalid input + .input-label:after {
+        transform: translateX(0%);
+        border-color: #ff3333;
     }
 </style>

@@ -15,6 +15,8 @@
             </router-link>
         </div>
         <LobbyList :lobbies="lobbies" :region="region"/>
+
+        <Footer />
     </div>
 </template>
 
@@ -22,6 +24,7 @@
     import firebase from 'firebase'
     import Header from '../components/Header'
     import LobbyList from '../components/LobbyList'
+    import Footer from '../components/Footer'
 
     export default {
         name: "Home",
@@ -34,7 +37,8 @@
         },
         components: {
             Header,
-            LobbyList
+            LobbyList,
+            Footer
         },
         created() {
             firebase.database().ref("Lobbies/" + this.region).once('value', (snapshot) => {
@@ -82,6 +86,7 @@
 
 <style scoped>
     .wrapper {
+        position: relative;
         display: flex;
         padding: 0 10px;
         min-height: 100vh;

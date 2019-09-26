@@ -1,7 +1,7 @@
 <template>
     <ul>
         <div v-if="!lobbies" class="none-available">
-            <p> No lobbies available right now :( </p>
+            <p> No lobbies available right now 😢 </p>
             <p> Try creating one! </p>
         </div>
         <li v-for="lobby in lobbies" v-bind:key="lobby.Key">
@@ -39,6 +39,7 @@
         max-width: 800px;
         width: 100%;
         list-style-type: none;
+        margin-bottom: 100px;
     }
 
     li {
