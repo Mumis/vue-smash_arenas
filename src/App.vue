@@ -19,24 +19,13 @@
 			}
 		},
 		created() {
-			firebase.database().ref("Users/" + this.userId + "/Lobby").once("value", snapshot => {
-				this.inAGame = snapshot.exists();
-				if (this.inAGame) {
-					var data = snapshot.val();
-					this.lobbyId = Object.values(data)[0];
-					this.lobbyRegion = Object.keys(data)[0];
-				}
-			}).then(() => {
-				if (this.inAGame) {
-					firebase.database().ref("Lobbies/" + this.lobbyRegion + "/" + this.lobbyId + "/Players").once("value", snapshot => {
-						var data = snapshot.val();
-						this.playersLeft = Object.keys(data);
-					}).then(() => {
-						if (this.playersLeft.length < 2) {
-							firebase.database().ref("Lobbies/" + this.lobbyRegion + "/" + this.lobbyId).onDisconnect().remove();
+			firebase.auth().onAuthStateChanged(user => {
+				if (user) {
+					firebase.database().ref('.info/connected').on('value', snapshot => {
+						if (snapshot.val()) {
+							firebase.database().ref('Presence/' + firebase.auth().currentUser.uid).onDisconnect().remove();
+							firebase.database().ref('Presence/' + firebase.auth().currentUser.uid).set(true);
 						}
-						firebase.database().ref("Lobbies/" + this.lobbyRegion + "/" + this.lobbyId + "/Players/" + this.userId).onDisconnect().remove();
-						firebase.database().ref("Users/" + this.userId + "/Lobby").onDisconnect().remove();
 					});
 				}
 			});
