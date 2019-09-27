@@ -36,31 +36,34 @@
                     this.players = Object.keys(this.lobby.Players).length;
                     this.maxPlayers = parseInt(this.lobby.MaxPlayers);
                 }
-                if (this.players >= this.maxPlayers) {
-                    this.full = true;
-                }
+                this.checkIfFull();
             },
             joinGame: function(lobby){       
                 firebase.database().ref("Lobbies/" + this.region + "/" + lobby.Key + "/Players").once("value", snapshot => {
                     if(snapshot.exists()){
                         var data = snapshot.val(); 
                         this.players = Object.keys(data).length;
-                        if (Object.keys(this.players).length < this.maxPlayers) {
+                        this.checkIfFull();
+                        if (this.players < this.maxPlayers) {
                             var userId = firebase.auth().currentUser.uid;
                             firebase.database().ref("Users/" + userId).update({
                                 Lobby: {
                                     [this.region]: lobby.Key
                                 }
+                            });
+                            firebase.database().ref("Lobbies/" + this.region + "/" + lobby.Key + "/Players").update({
+                                [userId]: true,
                             }).then(() => {
-                                firebase.database().ref("Lobbies/" + this.region + "/" + lobby.Key + "/Players").update({
-                                    [userId]: true,
-                                }).then(() => {
-                                    this.$router.replace('lobby')
-                                });
+                                this.$router.replace('lobby')
                             });
                         }
                     }
                 });
+            },
+            checkIfFull: function() {
+                if (this.players >= this.maxPlayers) {
+                    this.full = true;
+                }
             },
             onClick: function(lobby) {
                 this.joinGame(lobby)
