@@ -9,15 +9,6 @@
 
 	export default {
 		name: 'app',
-		data() {
-			return {
-				userId: firebase.auth().currentUser.uid,
-				inAGame: false,
-				lobbyId: "",
-				lobbyRegion: "",
-				playersLeft: "",
-			}
-		},
 		created() {
 			firebase.auth().onAuthStateChanged(user => {
 				if (user) {
