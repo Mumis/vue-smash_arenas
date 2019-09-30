@@ -58,10 +58,12 @@
                 this.startListener();
             },
             startListener: function() {
-                firebase.database().ref('Lobbies/' + this.region + "/").on('value', snapshot => {
+                firebase.database().ref('Lobbies/' + this.region).on('value', snapshot => {
                     if (snapshot.exists()) {
                         var data = snapshot.val();
                         this.lobbies = this.reverseObject(data);
+                    } else {
+                        this.lobbies = null;
                     }
                 });
             },
@@ -79,8 +81,8 @@
                 for (var i = keys.length - 1; i >= 0; i--) {
                     var value = object[keys[i]];
                     newObject[keys[i]]= value;
-                }       
-
+                }
+                
                 return newObject;
             }
         },  

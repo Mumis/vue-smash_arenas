@@ -5,7 +5,7 @@
             <p> Try creating one! </p>
         </div>
         <li v-else v-for="lobby in lobbies" v-bind:key="lobby.Key">
-            <LobbyItem v-if="lobby" :lobby="lobby" :region="region"/>
+            <LobbyItem :lobby="lobby" :region="region"/>
         </li>
     </ul>
 </template>

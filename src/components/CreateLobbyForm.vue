@@ -93,7 +93,7 @@
                         [userId]: true
                     },
                     Messages: {
-                        1: {
+                        [-1]: {
                             Username: "Notice",
                             Message: "Do not share passwords or other sensitive information with anyone.",
                             Timestamp: Date.now()

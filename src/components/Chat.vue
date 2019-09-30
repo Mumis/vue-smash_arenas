@@ -69,9 +69,6 @@
         width: 100%;
     }
 
-    .chat-inner-wrapper {
-    }
-
     ul {
         padding: 5px;
         flex: 1;
