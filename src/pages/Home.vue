@@ -1,21 +1,21 @@
 <template>
     <div class="wrapper">
         <Header/>
-
-        <div class="header">
-            <select v-model="region" @change="onChange">
-                <option value="Europe">Europe</option>
-                <option value="America">America</option>
-                <option value="Asia">Asia</option>
-                <option value="Africa">Africa</option>
-                <option value="Oceania">Oceania</option>
-            </select>
-            <router-link to="/createlobby">
-                <button>New lobby</button>
-            </router-link>
+        <div class="inner-wrapper"> 
+            <div class="header">
+                <select v-model="region" @change="onChange">
+                    <option value="Europe">Europe</option>
+                    <option value="America">America</option>
+                    <option value="Asia">Asia</option>
+                    <option value="Africa">Africa</option>
+                    <option value="Oceania">Oceania</option>
+                </select>
+                <router-link to="/createlobby">
+                    <button>New lobby</button>
+                </router-link>
+            </div>
+            <LobbyList :lobbies="lobbies" :region="region"/>
         </div>
-        <LobbyList :lobbies="lobbies" :region="region"/>
-
         <Footer />
     </div>
 </template>
@@ -40,11 +40,6 @@
             LobbyList,
             Footer
         },
-        created() {
-            firebase.database().ref("Lobbies/" + this.region).once('value', (snapshot) => {
-                this.lobbies = snapshot.val();
-            });
-        },
         mounted() {
             const userId = firebase.auth().currentUser.uid;
             firebase.database().ref("Users/" + userId + "/Lobby").once("value", snapshot => {
@@ -52,6 +47,10 @@
                     firebase.database().ref("Users/" + userId + "/Lobby").remove();
                 }
             });
+            this.startListener();
+        },
+        destroyed() {
+            this.destroyListener();
         },
         methods: {
             onChange: function() {
@@ -59,28 +58,31 @@
                     this.lobbies = snapshot.val();
                 });
             },
+            startListener: function() {
+                firebase.database().ref('Lobbies/' + this.region + "/").on('value', snapshot => {
+                    this.lobbies = snapshot.val();
+                });
+            },
+            destroyListener: function() {
+                firebase.database().ref('Lobbies' + this.region).off();
+            }
         },  
     };
 </script>
 
 <style scoped>
     .wrapper {
-        position: relative;
-        display: flex;
-        padding: 0 10px;
         min-height: 100vh;
-        align-items: center;
-        flex-direction: column;
         width: 100%;
     }
 
-    .logo {
-        max-height: 150px;
-        margin: 15px 0;
-        padding: 15px 0;
-        border-bottom: 1px solid;
-        border-image-source: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(150,159,168,0) 10%,rgba(44,62,80,1) 50%,rgba(150,159,168,0) 90%,rgba(255,255,255,0) 100%);
-        border-image-slice: 1;
+    .inner-wrapper {
+        position: relative;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
     }
 
     .header {

@@ -11,8 +11,7 @@
 </template>
 
 <script>
-
-    import LobbyItem from './LobbyItem';
+    import LobbyItem from './LobbyItem'
 
     export default {
         name: "LobbyList",
@@ -28,8 +27,10 @@
         components: {
             LobbyItem,
         },
-    };
+        mounted() {
 
+        }
+    };
 </script>
 
 <style scoped>
@@ -42,7 +43,7 @@
     }
 
     li {
-        padding: 15px 0;
+        padding: 7px 0;
         display: flex;
         justify-content: center;
         background: inherit;

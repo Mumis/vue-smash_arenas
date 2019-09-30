@@ -1,8 +1,23 @@
 <template>
     <div class="wrapper" @click="onClick(lobby)">
-        <p class="lobby-name">{{lobby.LobbyName}}</p>
-        <p><small>Connection type: {{lobby.Connection}}</small></p>
-        <p><small>Skill level: {{lobby.Skill}}</small></p>
+        <p class="lobby-name">{{lobby.LobbyName}} </p>
+        <div class="lobby-info">
+            <p>
+                <small class="connection" :class="lobby.Connection == 'Cable' ? 'green' : 'red'">
+                    {{lobby.Connection}}
+                    <span> Connection type</span>
+                </small>
+            </p>
+            <p>
+                <small class="skill" 
+                :class="[{'green' : lobby.Skill == 'Beginner'},
+                {'yellow' : lobby.Skill == 'Intermediate'},
+                {'red' : lobby.Skill == 'Pro'}]">
+                    {{lobby.Skill}} 
+                    <span> Skill level</span>
+                </small>
+            </p>
+        </div>
         <div class="players" :class= "{full: full}">
             {{players}} / {{maxPlayers}} <i class="fas fa-user"></i>
         </div>
@@ -77,12 +92,53 @@
 </script>
 
 <style scoped>
+
+    .green {
+        background-color: #4BB543;
+    }
+
+    .yellow {
+        background-color: #b9ba0a;
+    }
+
+    .red {
+        background-color: #ff3333;
+    }
+
+
     i {
         margin-left: 5px;
     }
 
     .lobby-name {
-        border-bottom: 1px solid #2c3e50;
+        margin-bottom: 10px;
+    }
+
+    .lobby-info p {
+        display: inline-block;
+        margin-bottom: 10px;
+        margin-right: 5px;
+    }
+
+    small {
+        position: relative;
+        font-size: 12px;
+        color: white;
+        padding: 5px;
+        border-radius: 3px;
+    }
+
+    small span {
+        display: none;
+        color: #2c3e50;
+        width: 100px;
+        position: absolute;
+        left: 0;
+        bottom: -18px;
+    }
+
+    small:hover span {
+        display: block;
     }
 
     .wrapper {
@@ -95,6 +151,7 @@
         background-color: rgb(219,236,236);
         position: absolute;
         top: 50%;
+        transform: translateY(-50%);
         right: 0;
     }
 

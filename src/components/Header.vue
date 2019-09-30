@@ -1,10 +1,8 @@
 <template>
-    <img src="../assets/Logo.svg" class="logo" @click="onClick"/>
+    <div class="logo" @click="onClick"> ARENA FINDER </div>
 </template>
 
 <script>
-    import firebase from 'firebase';
-
     export default {
         name: 'Header',
         data() {
@@ -22,17 +20,18 @@
             },
         },
     };
-
 </script>
 
 <style scoped>
     .logo {
-        max-height: 150px;
-        margin: 15px 0;
-        padding: 15px 0;
-        border-bottom: 1px solid;
-        border-image-source: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(150,159,168,0) 10%,rgba(44,62,80,1) 50%,rgba(150,159,168,0) 90%,rgba(255,255,255,0) 100%);
-        border-image-slice: 1;
+        width: 100%;
+        font-size: 20px;
+        margin-bottom: 15px;
+        padding: 12px 0;
+        background-color: #2c3e50;
+        color: white;
         cursor: pointer;
+        text-align: center;
+        box-shadow: 0px -4px 15px 0px rgba(0,0,0,0.75);
     }
 </style>
