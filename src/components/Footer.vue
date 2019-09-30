@@ -1,7 +1,9 @@
 <template>
     <footer class="footer">
-        <button @click="onClick"><i class="fas fa-sign-out-alt"></i></button>
-        <div class="creator"> © Emil Wertwein 2019 </div>
+        <div class="wrapper">
+            <button @click="onClick"><i class="fas fa-sign-out-alt"></i></button>
+            <div class="creator"> © Emil Wertwein 2019 </div>
+        </div>
     </footer>
 </template>
 
@@ -33,22 +35,29 @@
 <style scoped>
     .footer {
         display: flex;
-        justify-content: space-between;
-        align-content: center;
+        justify-content: center;
         position: absolute;
         bottom: 0;
-        padding: 10px 20px;    
+        padding: 10px;    
         width: 100%;
-        text-align: center;
         border-top: 1px solid #2c3e50;;
 
+    }
+
+    .wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+        max-width: 800px;
+        width: 100%;
+        text-align: center;
     }
 
     button {
         font-size: 16px;
         height: 35px;
         padding: 0 15px;
-        background-color: #ff3333;
+        background-color: #f46060;
         border: none;
         color: white;
         border-radius: 3px;
@@ -64,5 +73,4 @@
         display: flex;
         align-items: center;
     }
-
 </style>

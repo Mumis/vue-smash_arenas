@@ -27,7 +27,7 @@
         width: 100%;
         font-size: 20px;
         margin-bottom: 15px;
-        padding: 12px 0;
+        padding: 15px 0;
         background-color: #2c3e50;
         color: white;
         cursor: pointer;

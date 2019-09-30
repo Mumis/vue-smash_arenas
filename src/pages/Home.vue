@@ -32,7 +32,7 @@
             return {
                 region: 'Europe',
                 games: [],
-                lobbies: false
+                lobbies: null
             }
         },
         components: {
@@ -54,17 +54,34 @@
         },
         methods: {
             onChange: function() {
-                firebase.database().ref("Lobbies/" + this.region).once('value', (snapshot) => {
-                    this.lobbies = snapshot.val();
-                });
+                this.destroyListener();
+                this.startListener();
             },
             startListener: function() {
                 firebase.database().ref('Lobbies/' + this.region + "/").on('value', snapshot => {
-                    this.lobbies = snapshot.val();
+                    if (snapshot.exists()) {
+                        var data = snapshot.val();
+                        this.lobbies = this.reverseObject(data);
+                    }
                 });
             },
             destroyListener: function() {
                 firebase.database().ref('Lobbies' + this.region).off();
+            },
+            reverseObject: function(object) {
+                var newObject = {};
+                var keys = [];
+
+                for (var key in object) {
+                    keys.push(key);
+                }
+
+                for (var i = keys.length - 1; i >= 0; i--) {
+                    var value = object[keys[i]];
+                    newObject[keys[i]]= value;
+                }       
+
+                return newObject;
             }
         },  
     };
@@ -110,5 +127,4 @@
         color: white;
         border: none;
     }
-
 </style>

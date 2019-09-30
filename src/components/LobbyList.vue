@@ -4,7 +4,7 @@
             <p> No lobbies available right now 😢 </p>
             <p> Try creating one! </p>
         </div>
-        <li v-for="lobby in lobbies" v-bind:key="lobby.Key">
+        <li v-else v-for="lobby in lobbies" v-bind:key="lobby.Key">
             <LobbyItem v-if="lobby" :lobby="lobby" :region="region"/>
         </li>
     </ul>
@@ -27,9 +27,6 @@
         components: {
             LobbyItem,
         },
-        mounted() {
-
-        }
     };
 </script>
 
@@ -47,7 +44,8 @@
         display: flex;
         justify-content: center;
         background: inherit;
-        }
+        border-bottom: 1px solid;
+    }
 
     li:hover {
         background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(150,159,168,0) 10%,rgba(44,62,80,.1) 50%,rgba(150,159,168,0) 90%,rgba(255,255,255,0) 100%);

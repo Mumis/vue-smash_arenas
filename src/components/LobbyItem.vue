@@ -3,9 +3,10 @@
         <p class="lobby-name">{{lobby.LobbyName}} </p>
         <div class="lobby-info">
             <p>
-                <small class="connection" :class="lobby.Connection == 'Cable' ? 'green' : 'red'">
+                <small class="connection" :class="[{'green' : lobby.Connection == 'Cable'},
+                {'red' : lobby.Connection == 'Wifi'}]">
                     {{lobby.Connection}}
-                    <span> Connection type</span>
+                    <span> Connection type </span>
                 </small>
             </p>
             <p>
@@ -94,15 +95,15 @@
 <style scoped>
 
     .green {
-        background-color: #4BB543;
+        background-color: #83b582;
     }
 
     .yellow {
-        background-color: #b9ba0a;
+        background-color: #f3d179;
     }
 
     .red {
-        background-color: #ff3333;
+        background-color: #f46060;
     }
 
 
@@ -121,6 +122,7 @@
     }
 
     small {
+        min-width: 100px;
         position: relative;
         font-size: 12px;
         color: white;
@@ -137,13 +139,16 @@
         bottom: -18px;
     }
 
-    small:hover span {
-        display: block;
+    small span:hover {
+        display: none;
+    }
+
+    small span:before {
+        content: "content";
     }
 
     .wrapper {
         position: relative;
-        max-width: 500px;
         width: 100%;
     }
 
@@ -156,7 +161,7 @@
     }
 
     .full {
-        color: #ff3333;
+        color: #f46060;
     }
 
 </style>

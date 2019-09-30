@@ -93,9 +93,9 @@
                         [userId]: true
                     },
                     Messages: {
-                        Notice: {
+                        1: {
                             Username: "Notice",
-                            Message: "Say hello!",
+                            Message: "Do not share passwords or other sensitive information with anyone.",
                             Timestamp: Date.now()
                         },
                     },
@@ -114,7 +114,7 @@
         flex-direction: column;
         max-width: 400px;
         width: 100%;
-        padding: 15px;
+        padding: 15px 0;
         align-items: center;
     }
 
