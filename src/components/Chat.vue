@@ -3,15 +3,18 @@
         <ul>
             <li v-for="id in messages" v-bind:key="id.key">
                 <div v-if="id">
-                    <span class="username"> {{id.Username}}: </span> {{id.Message}} 
+                    <p class="username">
+                        <span>{{id.Username}}</span>
+                        <small>{{getTime(id.Timestamp)}}</small>
+                    </p> 
+                    {{id.Message}} 
                 </div> 
             </li>
         </ul>
         <div class="input">
             <input type="text" v-model="newMessage"/>
-            <button @click="sendMessage"> Send </button>
+            <button @click="sendMessage"> <i class="fas fa-angle-right"></i> </button>
         </div>
-
     </div>
 </template>
 
@@ -54,6 +57,15 @@
                     });
                 }
             },
+            getTime: function(timestamp) {
+                var date = new Date(timestamp);
+                var hours = date.getHours();
+                var minutes = date.getMinutes();
+                var seconds = date.getSeconds();
+                var time = hours + ":" + minutes + ":" + seconds
+
+                return time
+            }
         },
     };
 </script>
@@ -63,13 +75,16 @@
         display: flex;
         flex-direction: column;
         flex: 1;
-        max-height: 400px;
         background-color: white;
         border: solid 1px;
+        max-height: 100%;
         width: 100%;
     }
 
     ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
         padding: 5px;
         flex: 1;
         overflow-wrap: break-word;
@@ -78,8 +93,18 @@
         text-align: left;
     }
 
+    li {
+        margin: 4px 0;
+    }
+
     .username {
-        color: red;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+
+    small {
+        margin-left: 5px;
+        font-weight: normal;
     }
 
     .input {
@@ -92,19 +117,21 @@
         font-size: 15px;
         padding: 5px;
         width: 100%;
-        height: 35px;
+        height: 60px;
         border: none;
         border-top: 1px solid;
         outline: none;
     }
 
     button {
-        height: 35px;
         width: 60px;
-        background-color: #2c3e50;
-        color: white;
+        font-size: 30px;
+        background-color: white;
+        color: #2c3e50;
         border: none;
+        border-top: 1px solid;
         outline: none;
+        cursor: pointer;
     }
 
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <Header/>
+        <Header :addition="'Lobbies'"/>
         <div class="inner-wrapper"> 
             <div class="header">
                 <select v-model="region" @change="onChange">

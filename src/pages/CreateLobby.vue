@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <Header/>
+        <Header :addition="'Lobby creation'"/>
         <div class="inner-wrapper">
             <CreateLobbyForm/>
         </div>
@@ -24,13 +24,17 @@
 
 <style scoped>
     .wrapper {
+        display: flex;
+        flex-direction: column;
         min-height: 100vh;
     }
 
     .inner-wrapper {
         display: flex;
+        flex: 1;
         padding: 0 10px;
         align-items: center;
+        justify-content: center;
         flex-direction: column;
         width: 100%;
     }

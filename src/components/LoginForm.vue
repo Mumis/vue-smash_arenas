@@ -62,6 +62,10 @@
 </script>
 
 <style scoped>
+    small {
+        margin: 10px 0;
+    }
+
     .form {
         display: flex;
         flex-direction: column;

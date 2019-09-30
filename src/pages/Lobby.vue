@@ -1,10 +1,9 @@
 <template>
     <div class="wrapper">
-        <Header/>
+        <Header :addition="data.LobbyName"/>
         <div v-if="!data"> {{err}} </div>
         <div v-else  class="inner-wrapper">
             <div>
-                <h2> {{data.LobbyName}} </h2>
                 <p> ID : {{data.ArenaId}} </p>
                 <p> PASSWORD : {{data.ArenaPassword}} </p>
             </div>
@@ -66,7 +65,7 @@
         display: flex;
         align-items: center;
         flex-direction: column;
-        min-height: 100vh;
+        height: 100vh;
     }
 
     .inner-wrapper {
@@ -76,7 +75,6 @@
         max-width: 800px;
         width: 100%;
         text-align: center;
-        justify-content: space-between;
     }
 
     .inner-wrapper p {

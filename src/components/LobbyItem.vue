@@ -15,7 +15,7 @@
                 {'yellow' : lobby.Skill == 'Intermediate'},
                 {'red' : lobby.Skill == 'Pro'}]">
                     {{lobby.Skill}} 
-                    <span> Skill level</span>
+                    <span> Skill level </span>
                 </small>
             </p>
         </div>
