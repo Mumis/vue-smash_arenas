@@ -91,17 +91,18 @@
 
 <style scoped>
     .wrapper {
+        display: flex;
+        flex-direction: column;
         min-height: 100vh;
         width: 100%;
     }
 
     .inner-wrapper {
-        position: relative;
-        padding: 0 10px;
         display: flex;
-        align-items: center;
+        flex: 1;
         flex-direction: column;
-
+        align-items: center;
+        padding: 0 10px;
     }
 
     .header {

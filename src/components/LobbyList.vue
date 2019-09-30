@@ -33,10 +33,10 @@
 <style scoped>
 
     ul {
+        flex: 1;
         max-width: 800px;
         width: 100%;
         list-style-type: none;
-        margin-bottom: 100px;
     }
 
     li {

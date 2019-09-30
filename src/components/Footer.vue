@@ -36,11 +36,8 @@
     .footer {
         display: flex;
         justify-content: center;
-        position: absolute;
-        bottom: 0;
         padding: 10px;    
         width: 100%;
-        border-top: 1px solid #2c3e50;;
 
     }
 
