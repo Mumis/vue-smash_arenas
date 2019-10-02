@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper" @click="onClick(lobby)">
-        <p class="lobby-name">{{lobby.LobbyName}} </p>
+        <p class="lobby-name">{{lobby.LobbyName.slice(0,80)}}<span v-if="lobby.LobbyName.length > 80">...</span></p>
         <div class="lobby-info">
             <p>
                 <small class="connection" :class="[{'green' : lobby.Connection == 'Cable'},
@@ -33,6 +33,7 @@
         name: "LobbyItem",
         data() {
             return {
+                username: "",
                 players: "",
                 maxPlayers: "",
                 full: false
@@ -67,10 +68,17 @@
                                     [this.region]: lobby.Key
                                 }
                             });
-                            firebase.database().ref("Lobbies/" + this.region + "/" + lobby.Key + "/Players").update({
-                                [userId]: true,
+                            firebase.database().ref('Users/' + userId + '/Username').once('value', snapshot => {
+                                this.username = snapshot.val();
                             }).then(() => {
-                                this.$router.replace('lobby')
+                                firebase.database().ref("Lobbies/" + this.region + "/" + lobby.Key + "/Players").update({
+                                    [userId]: {
+                                        Username: this.username,
+                                        Key: userId
+                                    }
+                                }).then(() => {
+                                    this.$router.replace('lobby');
+                                });
                             });
                         }
                     }

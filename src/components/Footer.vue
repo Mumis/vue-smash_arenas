@@ -2,7 +2,7 @@
     <footer class="footer">
         <div class="wrapper">
             <button @click="onClick"><i class="fas fa-sign-out-alt"></i></button>
-            <div class="creator"> © Emil Wertwein 2019 </div>
+            <div class="creator"> <a href="https://twitter.com/wertwein" target="_blank" rel="noopener noreferrer">Twitter</a> <a href="https://github.com/Mumis" target="_blank" rel="noopener noreferrer">Github</a>  </div>
         </div>
     </footer>
 </template>
@@ -61,6 +61,10 @@
         cursor: pointer;
         outline: none;
     }
+
+    button:hover {
+        background-color: #db5656;
+    }
     
     button i {
         transform: rotate(180deg);
@@ -68,6 +72,10 @@
 
     .creator {
         display: flex;
-        align-items: center;
+        align-items: flex-end;
+    }
+
+    a {
+        margin-left: 20px;
     }
 </style>

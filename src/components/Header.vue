@@ -3,8 +3,7 @@
         <div class="logo">
             <span :class="{'lowlight': addition}"> ARENA FINDER </span>
             <span v-if="addition" class="lowlight"> / </span>
-            <span v-if="addition"> {{addition}} </span>
-            <img class="ball_logo" src="../assets/SmashBall.svg"/>
+            <span v-if="addition">{{addition.slice(0,25)}}<span v-if="addition.length > 25">...</span> </span>
         </div>
     </header>
 </template>
@@ -39,11 +38,9 @@
         font-weight:400;
         width: 100%;
         font-size: 20px;
-        margin-bottom: 15px;
         padding: 15px 0;
-        background-color: #2c3e50;
+        background-color: #303E4D;
         cursor: pointer;
-        box-shadow: 0px -4px 15px 0px rgba(0,0,0,0.75);
         text-align: center;
     }
 

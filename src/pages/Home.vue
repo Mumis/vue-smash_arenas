@@ -110,7 +110,7 @@
         justify-content: space-between;
         max-width: 800px;
         width: 100%;
-        margin-bottom: 15px;
+        margin: 15px 0;
     }
 
     button, select {

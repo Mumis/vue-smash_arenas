@@ -62,6 +62,7 @@
         name: "CreateLobbyForm",
         data() {
             return {
+                username: '',
                 skill: 'Intermediate',
                 region: 'Europe',
                 players: "2",
@@ -79,28 +80,30 @@
                     Lobby: {
                         [this.region]: key
                     },
+                
                 });
-                firebase.database().ref("Lobbies/" + this.region + "/" + key).set({
-                    Key: key,
-                    Skill: this.skill,
-                    LobbyName: this.lobbyName,
-                    ArenaId: this.arenaId,
-                    ArenaPassword: this.arenaPassword,
-                    Connection: this.connection,
-                    MaxPlayers: this.players,
-                    Created: Date.now(),
-                    Players: {
-                        [userId]: true
-                    },
-                    Messages: {
-                        [-1]: {
-                            Username: "Notice",
-                            Message: "Do not share passwords or other sensitive information with anyone.",
-                            Timestamp: Date.now()
-                        },
-                    },
+                firebase.database().ref('Users/' + userId + '/Username').once('value', snapshot => {
+                    this.username = snapshot.val();
                 }).then(() => {
-                    this.$router.replace('lobby');
+                    firebase.database().ref("Lobbies/" + this.region + "/" + key).set({
+                        Key: key,
+                        Skill: this.skill,
+                        LobbyName: this.lobbyName,
+                        ArenaId: this.arenaId,
+                        ArenaPassword: this.arenaPassword,
+                        Connection: this.connection,
+                        MaxPlayers: this.players,
+                        Created: Date.now(),
+                        Admin: userId,
+                        Players: {
+                            [userId]: {
+                                Username: this.username,
+                                Key: userId
+                            }
+                        },
+                    }).then(() => {
+                        this.$router.replace('lobby');
+                    });
                 });
             }, 
         },   

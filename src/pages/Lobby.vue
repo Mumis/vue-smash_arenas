@@ -1,27 +1,23 @@
 <template>
     <div class="wrapper">
-        <Header :addition="data.LobbyName"/>
-        <div v-if="!data"> {{err}} </div>
+        <div class="err" v-if="!data"> {{err}} </div>
         <div v-else  class="inner-wrapper">
-            <div>
-                <p> ID : {{data.ArenaId}} </p>
-                <p> PASSWORD : {{data.ArenaPassword}} </p>
-            </div>
-            <Chat :messages="data.Messages" :lobbyRegion="lobbyRegion" :lobbyKey="lobbyKey"/>
+            <LobbyTools :lobbyName="data.LobbyName" :arenaId="data.ArenaId" :arenaPw="data.ArenaPassword" :users="data.Players" :admin="data.Admin" :lobbyRegion="lobbyRegion" :lobbyKey="lobbyKey"/>
+            <Chat :messages="data.Messages" :lobbyRegion="lobbyRegion" :lobbyKey="lobbyKey" :arenaId="data.ArenaId" :arenaPw="data.ArenaPassword"/>
         </div>
     </div>
 </template>
 
 <script>
-    import Header from '../components/Header'
     import Chat from '../components/Chat'
+    import LobbyTools from '../components/LobbyTools'
     import firebase from 'firebase'
 
     export default {
         name: "Lobby",
         components: {
-            Header,
-            Chat
+            Chat,
+            LobbyTools
         },
         data() {
             return {
@@ -29,7 +25,7 @@
                 lobbyRegion: "",
                 lobbyKey: "",
                 data: {},
-                err: "Ugh... Join a lobby before you go here."
+                err: "Oops.. looks like you've been kicked 🤔"
             }
         },
         methods: {
@@ -61,18 +57,22 @@
 </script>
 
 <style scoped>
+    .err {
+        margin: 30px 5px;
+    }
+
     .wrapper {
         display: flex;
-        align-items: center;
         flex-direction: column;
+        align-items: center;
         height: 100vh;
+        max-height: 100vh;
     }
 
     .inner-wrapper {
+        position: relative;
         display: flex;
-        flex-direction: column;
         flex: 1;
-        max-width: 800px;
         width: 100%;
         text-align: center;
     }
