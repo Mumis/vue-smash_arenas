@@ -4,14 +4,12 @@
             <div class="menu-toggle" @click="toggleMenu"><span></span><span></span><span></span></div>
             <div class="top">
                 <h3> {{lobbyName}} </h3>
-
                 <div class="info">
                     <p> ARENA ID: </p>
                     <h3> {{arenaId}} </h3>
                     <p> ARENA PASSWORD: </p>
                     <h3> {{arenaPw}} </h3>
                 </div>
-
                 <div class="users">
                     <p> USERS: </p>
                     <ul>
@@ -101,7 +99,7 @@
         flex-direction: column;
         justify-content: space-between;
         background-color: #303E4D;
-        width: 250px;
+        width: 300px;
         height: 100%;
         font-size: 15px;
         padding: 15px;
@@ -172,7 +170,7 @@
         color: white;
     }
 
-    @media screen and (max-width: 680px) {
+    @media screen and (max-width: 780px) {
         #aside-content {
             display: flex !important;
             position: absolute;

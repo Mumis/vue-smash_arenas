@@ -1,6 +1,9 @@
 <template>
     <div class="wrapper">
-        <div class="err" v-if="!data"> {{err}} </div>
+        <div class="err" v-if="!data">
+            <Header />
+            <p>{{err}}</p>
+        </div>
         <div v-else  class="inner-wrapper">
             <LobbyTools :lobbyName="data.LobbyName" :arenaId="data.ArenaId" :arenaPw="data.ArenaPassword" :users="data.Players" :admin="data.Admin" :lobbyRegion="lobbyRegion" :lobbyKey="lobbyKey"/>
             <Chat :messages="data.Messages" :lobbyRegion="lobbyRegion" :lobbyKey="lobbyKey" :arenaId="data.ArenaId" :arenaPw="data.ArenaPassword"/>
@@ -9,6 +12,7 @@
 </template>
 
 <script>
+    import Header from '../components/Header'
     import Chat from '../components/Chat'
     import LobbyTools from '../components/LobbyTools'
     import firebase from 'firebase'
@@ -16,6 +20,7 @@
     export default {
         name: "Lobby",
         components: {
+            Header,
             Chat,
             LobbyTools
         },
@@ -24,13 +29,13 @@
                 userId: firebase.auth().currentUser.uid,
                 lobbyRegion: "",
                 lobbyKey: "",
-                data: {},
+                data: null,
                 err: "Oops.. looks like you've been kicked 🤔"
             }
         },
         methods: {
-            startListener() {
-                firebase.database().ref('Users/' + this.userId + '/Lobby').once('value', snapshot => {
+            startListeners() {
+                firebase.database().ref('Users/' + this.userId + '/Lobby').on('value', snapshot => {
                     if (snapshot.exists()) {
                         var data = snapshot.val();
                         this.lobbyKey = Object.values(data)[0];
@@ -39,26 +44,34 @@
                             this.data = snapshot.val();
                         });
                     } else {
+                        this.destroyListeners();
                         this.data = null;
                     }
                 })
             },
-            destroyListener() {
+            destroyListeners() {
                 firebase.database().ref('Lobbies/' + this.lobbyRegion + '/' + this.lobbyKey).off();
+                firebase.database().ref('Users/' + this.userId + '/Lobby').off();
             }
         },
         mounted() {
-            this.startListener();
+            this.startListeners();
         },
         destroyed() {
-            this.destroyListener();
+            this.destroyListeners();
         }
     }
 </script>
 
 <style scoped>
     .err {
+        width: 100%;
+        height: 100%;
+    }
+
+    .err p {
         margin: 30px 5px;
+        text-align: center;
     }
 
     .wrapper {
